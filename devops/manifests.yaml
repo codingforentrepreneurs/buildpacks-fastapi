@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: buildpacks
+
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: fastyapi
+  template:
+    metadata:
+      labels:
+        app: fastyapi
+    spec:
+      containers:
+      - name: fastapi
+        image: jmitchel3/buildpacks-fastapi 
+        ports:
+        - containerPort: 8000
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: deployment-lb
+spec:
+  type: LoadBalancer
+  selector:
+    app: fastyapi
+  ports:
+    - protocol: TCP
+      port: 80

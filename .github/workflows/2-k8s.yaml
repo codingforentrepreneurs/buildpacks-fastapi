@@ -1,0 +1,34 @@
+name: Deploy to Kubernetes
+on: 
+  workflow_dispatch:
+
+jobs:
+  verify_service_account:
+    name: Verify K8s Service Account
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo Code
+        uses: actions/checkout@v4
+      - uses: azure/setup-kubectl@v3
+      - name: Create/Verify `.kube` directory
+        run: mkdir -p ~/.kube/
+      - name: Create kubectl config
+        run: |
+          cat << EOF >> ~/.kube/config
+          ${{ secrets.KUBECONFIG_SA }}
+          EOF
+      - name: Apply App Changes
+        run: |
+          kubectl apply -f devops/
+      - name: Rollout Apps
+        run: |
+          kubectl rollout restart deployment buildpacks
+      - name: Echo pods
+        run: |
+          kubectl get pods
+      - name: Echo deployments
+        run: |
+          kubectl get deployments
+      - name: Echo Service
+        run: |
+           kubectl get service
