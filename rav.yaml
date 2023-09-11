@@ -1,0 +1,20 @@
+# Use this as reference commands to run
+scripts:
+  # Configure your virtual env
+  # Run: if you don't have a venv
+  first_run:
+    - python3 -m venv venv
+    - venv/pip install pip-tools pip rav --upgrade
+  # Install requirements
+  # Run: as needed
+  installs: 
+    - pip-compile src/requirements/requirements.in --output-file requirements.txt
+    - venv/bin/pip install -r requirements.txt
+  # Use the development server
+  # Run: Only during development
+  devserver: 
+    - uvicorn src.main:app --reload
+  # Use the production server
+  # Run: For production or dev
+  prodserver:
+    - gunicorn -k uvicorn.workers.UvicornWorker src.main:app --bind "0.0.0.0:8000"
