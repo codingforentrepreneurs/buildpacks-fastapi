@@ -33,3 +33,11 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: setup pack
+        uses: buildpacks/github-actions/setup-pack@v5.0.0
+      - name: Run pack and create container
+        run: |
+          pack build --builder gcr.io/buildpacks/builder:google-22 jmitchel3/buildpacks-fastapi
+      - name: Push to DockerHub
+        run: |
+          docker push jmitchel3/buildpacks-fastapi  --all-tags
