@@ -7,6 +7,6 @@ Reference repo: https://github.com/codingforentrepreneurs/buildpacks-fastapi
 
 
 ### Google Buildpacks
-Docs: https://cloud.google.com/docs/buildpacks/builders
-Python app config: https://cloud.google.com/docs/buildpacks/python
-Node.js app config: https://cloud.google.com/docs/buildpacks/nodejs
+- Docs: https://cloud.google.com/docs/buildpacks/builders
+- Python app config: https://cloud.google.com/docs/buildpacks/python
+- Node.js app config: https://cloud.google.com/docs/buildpacks/nodejs
